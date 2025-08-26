@@ -8,433 +8,226 @@
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
     <style>
-        /* General Styling and Variables */
         :root {
-            --primary-color: #00A9FF;
-            --secondary-color: #89CFF3;
-            --background-color: #0F172A;
-            --surface-color: #1E293B;
-            --text-color: #E2E8F0;
-            --error-color: #F87171;
-            --success-color: #34D399;
-            --font-family: 'Inter', sans-serif;
+            --primary-color: #00A9FF; --secondary-color: #89CFF3; --background-color: #0F172A;
+            --surface-color: #1E293B; --text-color: #E2E8F0; --error-color: #F87171;
+            --success-color: #34D399; --font-family: 'Inter', sans-serif;
         }
-
-        /* Basic Reset */
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-        }
-
-        /* Body and Page Layout */
+        * { margin: 0; padding: 0; box-sizing: border-box; }
         body {
-            font-family: var(--font-family);
-            background: var(--background-color);
-            color: var(--text-color);
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            min-height: 100vh;
-            overflow: hidden;
+            font-family: var(--font-family); background: var(--background-color); color: var(--text-color);
+            display: flex; justify-content: center; align-items: center; min-height: 100vh; overflow: hidden;
             background-image: radial-gradient(circle at 20% 20%, rgba(0, 169, 255, 0.1), transparent 30%),
                               radial-gradient(circle at 80% 80%, rgba(137, 207, 243, 0.1), transparent 30%);
         }
-
-        /* Main Authentication Container */
         .auth-container {
-            width: 100%;
-            max-width: 420px;
-            background-color: var(--surface-color);
-            padding: 2.5rem;
-            border-radius: 1.5rem;
-            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.2);
-            border: 1px solid rgba(255, 255, 255, 0.1);
-            position: relative;
-            overflow: hidden;
+            width: 100%; max-width: 420px; background-color: var(--surface-color); padding: 2.5rem;
+            border-radius: 1.5rem; box-shadow: 0 20px 40px rgba(0, 0, 0, 0.2);
+            border: 1px solid rgba(255, 255, 255, 0.1); position: relative; overflow: hidden;
         }
-
-        /* Header Styling */
-        .auth-header {
-            text-align: center;
-            margin-bottom: 2rem;
-        }
-
-        .auth-header h1 {
-            font-size: 2rem;
-            font-weight: 700;
-            color: #fff;
-            margin-bottom: 0.5rem;
-        }
-
-        .auth-header p {
-            color: var(--secondary-color);
-            font-size: 1rem;
-        }
-
-        /* Form Group Styling */
-        .form-group {
-            margin-bottom: 1.25rem;
-            position: relative;
-        }
-
-        /* Input Field Styling */
+        .auth-header { text-align: center; margin-bottom: 2rem; }
+        .auth-header h1 { font-size: 2rem; font-weight: 700; color: #fff; margin-bottom: 0.5rem; }
+        .auth-header p { color: var(--secondary-color); font-size: 1rem; }
+        .form-group { margin-bottom: 1.25rem; position: relative; }
         .form-input {
-            width: 100%;
-            padding: 1rem;
-            background-color: #334155;
-            border: 1px solid #475569;
-            border-radius: 0.75rem;
-            color: var(--text-color);
-            font-size: 1rem;
+            width: 100%; padding: 1rem; background-color: #334155; border: 1px solid #475569;
+            border-radius: 0.75rem; color: var(--text-color); font-size: 1rem;
             transition: border-color 0.3s ease, box-shadow 0.3s ease;
         }
-
-        .form-input::placeholder {
-            color: #94A3B8;
-        }
-
+        .form-input::placeholder { color: #94A3B8; }
         .form-input:focus {
-            outline: none;
-            border-color: var(--primary-color);
+            outline: none; border-color: var(--primary-color);
             box-shadow: 0 0 0 3px rgba(0, 169, 255, 0.3);
         }
-
-        /* Error Message Styling */
         .error-message {
-            color: var(--error-color);
-            font-size: 0.875rem;
-            padding-top: 0.5rem;
-            display: none; /* Hidden by default */
-            min-height: 1.25rem; /* Prevents layout shifts */
+            color: var(--error-color); font-size: 0.875rem; padding-top: 0.5rem;
+            display: none; min-height: 1.25rem;
         }
-
-        /* Submit Button Styling */
         .submit-btn {
-            width: 100%;
-            padding: 1rem;
-            background: linear-gradient(90deg, var(--primary-color), var(--secondary-color));
-            border: none;
-            border-radius: 0.75rem;
-            color: #fff;
-            font-size: 1rem;
-            font-weight: 600;
-            cursor: pointer;
-            transition: transform 0.2s ease, box-shadow 0.2s ease;
+            width: 100%; padding: 1rem; background: linear-gradient(90deg, var(--primary-color), var(--secondary-color));
+            border: none; border-radius: 0.75rem; color: #fff; font-size: 1rem; font-weight: 600;
+            cursor: pointer; transition: transform 0.2s ease, box-shadow 0.2s ease;
         }
-
-        .submit-btn:hover {
-            transform: translateY(-2px);
-            box-shadow: 0 10px 20px rgba(0, 169, 255, 0.2);
-        }
-
-        /* Mode Switcher Styling */
-        .mode-switcher {
-            text-align: center;
-            margin-top: 1.5rem;
-            font-size: 0.9rem;
-            color: #94A3B8;
-        }
-
+        .submit-btn:hover { transform: translateY(-2px); box-shadow: 0 10px 20px rgba(0, 169, 255, 0.2); }
+        .mode-switcher { text-align: center; margin-top: 1.5rem; font-size: 0.9rem; color: #94A3B8; }
         .mode-switcher button {
-            background: none;
-            border: none;
-            color: var(--primary-color);
-            font-weight: 600;
-            cursor: pointer;
-            font-size: 0.9rem;
+            background: none; border: none; color: var(--primary-color);
+            font-weight: 600; cursor: pointer; font-size: 0.9rem;
         }
-
-        .mode-switcher button:hover {
-            text-decoration: underline;
-        }
-
-        /* Dynamic Fields Animation */
+        .mode-switcher button:hover { text-decoration: underline; }
         .dynamic-field {
-            max-height: 0;
-            overflow: hidden;
-            transition: max-height 0.5s ease-out, margin-bottom 0.5s ease-out;
-            margin-bottom: 0;
+            max-height: 0; overflow: hidden;
+            transition: max-height 0.5s ease-out, margin-bottom 0.5s ease-out; margin-bottom: 0;
         }
-
-        .auth-container.signup-mode .dynamic-field {
-            max-height: 100px; /* Adjust based on content height */
-            margin-bottom: 1.25rem;
-        }
-        
-        /* Custom Message Box */
+        .auth-container.signup-mode .dynamic-field { max-height: 100px; margin-bottom: 1.25rem; }
         .message-box {
-            position: fixed;
-            top: 20px;
-            left: 50%;
-            transform: translate(-50%, -150%);
-            padding: 1rem 2rem;
-            border-radius: 0.75rem;
-            color: #fff;
-            font-weight: 600;
-            box-shadow: 0 5px 15px rgba(0,0,0,0.2);
-            z-index: 1000;
+            position: fixed; top: 20px; left: 50%; transform: translate(-50%, -150%);
+            padding: 1rem 2rem; border-radius: 0.75rem; color: #fff; font-weight: 600;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.2); z-index: 1000;
             transition: transform 0.5s ease-in-out;
         }
-        
-        .message-box.show {
-            transform: translate(-50%, 0);
-        }
-        
-        .message-box.success {
-            background-color: var(--success-color);
-        }
+        .message-box.show { transform: translate(-50%, 0); }
+        .message-box.success { background-color: var(--success-color); }
+        .message-box.error { background-color: var(--error-color); }
     </style>
 </head>
 <body>
 
-    <div class="auth-container" id="auth-container">
-        <!-- Header -->
-        <div class="auth-header">
+<div class="auth-container" id="auth-container">
+    <div class="auth-header">
             <h1 id="form-title">Create Account</h1>
             <p id="form-subtitle">Welcome to UniAgent</p>
         </div>
-
-        <!-- Form -->
         <form id="auth-form" novalidate>
-            <!-- User ID -->
             <div class="form-group">
                 <input type="text" id="userid" class="form-input" placeholder="User ID (e.g., 21MIS1128)" required>
                 <div class="error-message" id="userid-error"></div>
             </div>
-
-            <!-- Username (Sign Up Only) -->
             <div class="form-group dynamic-field" id="username-group">
                 <input type="text" id="username" class="form-input" placeholder="Username" required>
                 <div class="error-message" id="username-error"></div>
             </div>
-
-            <!-- Email (Sign Up Only) -->
             <div class="form-group dynamic-field" id="email-group">
                 <input type="email" id="email" class="form-input" placeholder="Student Email" required>
                 <div class="error-message" id="email-error"></div>
             </div>
-
-            <!-- Password -->
             <div class="form-group">
                 <input type="password" id="password" class="form-input" placeholder="Password" required>
                 <div class="error-message" id="password-error"></div>
             </div>
-
-            <!-- Confirm Password (Sign Up Only) -->
             <div class="form-group dynamic-field" id="confirm-password-group">
                 <input type="password" id="confirm-password" class="form-input" placeholder="Confirm Password" required>
                 <div class="error-message" id="confirm-password-error"></div>
             </div>
-
-            <!-- Submit Button -->
             <button type="submit" class="submit-btn" id="submit-btn">Sign Up</button>
         </form>
-
-        <!-- Mode Switcher -->
         <div class="mode-switcher">
             <span id="switcher-text">Already have an account?</span>
             <button id="mode-toggle-btn">Sign In</button>
         </div>
-    </div>
+</div>
 
-    <!-- Custom Message Box for Success -->
-    <div id="message-box" class="message-box success"></div>
+<div id="message-box" class="message-box"></div>
 
-    <script>
-        document.addEventListener('DOMContentLoaded', () => {
-            // --- DOM Element References ---
-            const authContainer = document.getElementById('auth-container');
-            const form = document.getElementById('auth-form');
-            const modeToggleButton = document.getElementById('mode-toggle-btn');
-            
-            // Form fields and groups
-            const useridInput = document.getElementById('userid');
-            const usernameInput = document.getElementById('username');
-            const emailInput = document.getElementById('email');
-            const passwordInput = document.getElementById('password');
-            const confirmPasswordInput = document.getElementById('confirm-password');
-            
-            // UI text elements
-            const formTitle = document.getElementById('form-title');
-            const formSubtitle = document.getElementById('form-subtitle');
-            const submitBtn = document.getElementById('submit-btn');
-            const switcherText = document.getElementById('switcher-text');
-            
-            // Error message divs
-            const errorDivs = {
-                userid: document.getElementById('userid-error'),
-                username: document.getElementById('username-error'),
-                email: document.getElementById('email-error'),
-                password: document.getElementById('password-error'),
-                confirmPassword: document.getElementById('confirm-password-error')
-            };
+<script>
+document.addEventListener('DOMContentLoaded', () => {
+    const authContainer = document.getElementById('auth-container');
+    const form = document.getElementById('auth-form');
+    const modeToggleButton = document.getElementById('mode-toggle-btn');
+    const useridInput = document.getElementById('userid');
+    const usernameInput = document.getElementById('username');
+    const emailInput = document.getElementById('email');
+    const passwordInput = document.getElementById('password');
+    const confirmPasswordInput = document.getElementById('confirm-password');
+    const formTitle = document.getElementById('form-title');
+    const formSubtitle = document.getElementById('form-subtitle');
+    const submitBtn = document.getElementById('submit-btn');
+    const switcherText = document.getElementById('switcher-text');
+    const messageBox = document.getElementById('message-box');
+    const errorDivs = {
+        userid: document.getElementById('userid-error'),
+        username: document.getElementById('username-error'),
+        email: document.getElementById('email-error'),
+        password: document.getElementById('password-error'),
+        confirmPassword: document.getElementById('confirm-password-error')
+    };
 
-            // Message Box
-            const messageBox = document.getElementById('message-box');
+    let currentMode = 'signup';
 
-            // --- State ---
-            let currentMode = 'signup'; // 'signup' or 'signin'
+    const regex = {
+        userid: /^\d{2}[A-Z]{3}\d{4,5}$/,
+        email: /^[a-zA-Z0-9._%+-]+@vitstudent\.ac\.in$/,
+        password: /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&]).{8,}$/
+    };
 
-            // --- Regular Expressions for Validation ---
-            const regex = {
-                // Format: 2 digits, 3 uppercase letters, 4 to 5 digits
-                userid: /^\d{2}[A-Z]{3}\d{4,5}$/,
-                // Must be a @vitstudent.ac.in email
-                email: /^[a-zA-Z0-9._%+-]+@vitstudent\.ac\.in$/,
-                // 8+ chars, 1 uppercase, 1 lowercase, 1 number, 1 special char
-                password: /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,}$/
-            };
+    const updateUIForMode = () => {
+        Object.values(errorDivs).forEach(div => div.style.display = 'none');
+        form.reset();
+        authContainer.classList.toggle('signup-mode', currentMode === 'signup');
+        formTitle.textContent = currentMode === 'signup' ? 'Create Account' : 'Welcome Back';
+        formSubtitle.textContent = currentMode === 'signup' ? 'Join the future of university assistance' : 'Sign in to access UniAgent';
+        submitBtn.textContent = currentMode === 'signup' ? 'Sign Up' : 'Sign In';
+        switcherText.textContent = currentMode === 'signup' ? 'Already have an account?' : "Don't have an account?";
+        modeToggleButton.textContent = currentMode === 'signup' ? 'Sign In' : 'Sign Up';
+    };
 
-            // --- Functions ---
+    const toggleMode = () => { currentMode = currentMode === 'signup' ? 'signin' : 'signup'; updateUIForMode(); };
 
-            /**
-             * Updates the UI based on the current mode ('signup' or 'signin').
-             */
-            const updateUIForMode = () => {
-                clearErrors();
-                form.reset();
-                if (currentMode === 'signup') {
-                    authContainer.classList.add('signup-mode');
-                    formTitle.textContent = 'Create Account';
-                    formSubtitle.textContent = 'Join the future of university assistance';
-                    submitBtn.textContent = 'Sign Up';
-                    switcherText.textContent = 'Already have an account?';
-                    modeToggleButton.textContent = 'Sign In';
-                } else {
-                    authContainer.classList.remove('signup-mode');
-                    formTitle.textContent = 'Welcome Back';
-                    formSubtitle.textContent = 'Sign in to access UniAgent';
-                    submitBtn.textContent = 'Sign In';
-                    switcherText.textContent = "Don't have an account?";
-                    modeToggleButton.textContent = 'Sign Up';
-                }
-            };
-            
-            /**
-             * Toggles the mode between 'signup' and 'signin'.
-             */
-            const toggleMode = () => {
-                currentMode = currentMode === 'signup' ? 'signin' : 'signup';
-                updateUIForMode();
-            };
-            
-            /**
-             * Displays an error message for a specific field.
-             * @param {string} field - The name of the field (e.g., 'userid').
-             * @param {string} message - The error message to display.
-             */
-            const showError = (field, message) => {
-                const errorDiv = errorDivs[field];
-                if (errorDiv) {
-                    errorDiv.textContent = message;
-                    errorDiv.style.display = 'block';
-                }
-            };
+    const showMessage = (message, type = 'success') => {
+        messageBox.textContent = message;
+        messageBox.className = `message-box ${type} show`;
+        setTimeout(() => messageBox.classList.remove('show'), 3000);
+    };
 
-            /**
-             * Clears all error messages from the form.
-             */
-            const clearErrors = () => {
-                for (const field in errorDivs) {
-                    const errorDiv = errorDivs[field];
-                    if (errorDiv) {
-                        errorDiv.textContent = '';
-                        errorDiv.style.display = 'none';
-                    }
-                }
-            };
+    async function hashPassword(string) {
+        const utf8 = new TextEncoder().encode(string);
+        const hashBuffer = await crypto.subtle.digest('SHA-256', utf8);
+        return Array.from(new Uint8Array(hashBuffer)).map(b => b.toString(16).padStart(2, '0')).join('');
+    }
 
-            /**
-             * Shows a custom success message box.
-             * @param {string} message - The message to display.
-             */
-            const showSuccessMessage = (message) => {
-                messageBox.textContent = message;
-                messageBox.classList.add('show');
-                setTimeout(() => {
-                    messageBox.classList.remove('show');
-                }, 3000); // Hide after 3 seconds
-            };
+    const validateForm = () => {
+        Object.values(errorDivs).forEach(div => div.style.display = 'none');
+        let isValid = true;
+        if (!regex.userid.test(useridInput.value)) { errorDivs.userid.textContent = 'User ID must be in the format 21MIS1128.'; errorDivs.userid.style.display='block'; isValid=false; }
+        if (currentMode === 'signup') {
+            if(usernameInput.value.length<3){ errorDivs.username.textContent='Username must be at least 3 chars'; errorDivs.username.style.display='block'; isValid=false; }
+            if(!regex.email.test(emailInput.value)){ errorDivs.email.textContent='Email must end with @vitstudent.ac.in'; errorDivs.email.style.display='block'; isValid=false; }
+            if(!regex.password.test(passwordInput.value)){ errorDivs.password.textContent='Password invalid'; errorDivs.password.style.display='block'; isValid=false; }
+            if(passwordInput.value!==confirmPasswordInput.value){ errorDivs.confirmPassword.textContent='Passwords do not match'; errorDivs.confirmPassword.style.display='block'; isValid=false; }
+        } else if(currentMode==='signin' && !passwordInput.value){ errorDivs.password.textContent='Password required'; errorDivs.password.style.display='block'; isValid=false; }
+        return isValid;
+    };
 
-            /**
-             * Validates the form fields based on the current mode.
-             * @returns {boolean} - True if the form is valid, false otherwise.
-             */
-            const validateForm = () => {
-                clearErrors();
-                let isValid = true;
+    const handleSignUp = async () => {
+        const userId = useridInput.value;
+        const hashedPassword = await hashPassword(passwordInput.value);
 
-                // --- User ID Validation (All modes) ---
-                if (!regex.userid.test(useridInput.value)) {
-                    showError('userid', 'User ID must be in the format 21MIS1128.');
-                    isValid = false;
-                }
+        try {
+            const res = await fetch('http://localhost:3000/signup', {
+                method:'POST',
+                headers:{'Content-Type':'application/json'},
+                body: JSON.stringify({userId, username:usernameInput.value,email:emailInput.value,passwordHash:hashedPassword})
+            });
+            const data = await res.json();
+            if(!res.ok){ showMessage(data.message,'error'); return; }
+            showMessage('Account created successfully! Redirecting...', 'success');
+            localStorage.setItem('uniagent_user',JSON.stringify({userId,username:usernameInput.value}));
+            setTimeout(()=>window.location.href='chat.html',1500);
+        } catch(e){ console.error(e); showMessage('Server error','error'); }
+    };
 
-                // --- Password Validation (All modes) ---
-                if (currentMode === 'signin' && !passwordInput.value) {
-                     showError('password', 'Password is required.');
-                     isValid = false;
-                }
+    const handleSignIn = async () => {
+        const userId = useridInput.value;
+        const hashedPassword = await hashPassword(passwordInput.value);
+        try {
+            const res = await fetch('http://localhost:3000/signin', {
+                method:'POST',
+                headers:{'Content-Type':'application/json'},
+                body: JSON.stringify({userId,passwordHash:hashedPassword})
+            });
+            const data = await res.json();
+            if(!res.ok){ showMessage(data.message,'error'); return; }
+            showMessage('Signed in successfully! Redirecting...', 'success');
+            localStorage.setItem('uniagent_user',JSON.stringify({userId,username:data.username}));
+            setTimeout(()=>window.location.href='chat.html',1500);
+        } catch(e){ console.error(e); showMessage('Server error','error'); }
+    };
 
-                // --- Sign Up Specific Validations ---
-                if (currentMode === 'signup') {
-                    // Username
-                    if (usernameInput.value.length < 3) {
-                        showError('username', 'Username must be at least 3 characters.');
-                        isValid = false;
-                    }
-                    // Email
-                    if (!regex.email.test(emailInput.value)) {
-                        showError('email', 'Email must end with @vitstudent.ac.in.');
-                        isValid = false;
-                    }
-                    // Password complexity
-                    if (!regex.password.test(passwordInput.value)) {
-                        showError('password', 'Password needs 8+ chars, uppercase, lowercase, number, & special character.');
-                        isValid = false;
-                    }
-                    // Confirm Password
-                    if (passwordInput.value !== confirmPasswordInput.value) {
-                        showError('confirmPassword', 'Passwords do not match.');
-                        isValid = false;
-                    }
-                }
+    form.addEventListener('submit', async (e)=>{
+        e.preventDefault();
+        submitBtn.disabled = true;
+        submitBtn.textContent = 'Processing...';
+        if(validateForm()){ 
+            if(currentMode==='signup') await handleSignUp();
+            else await handleSignIn();
+        }
+        submitBtn.disabled=false;
+        updateUIForMode();
+    });
 
-                return isValid;
-            };
-
-            /**
-             * Handles the form submission event.
-             * @param {Event} e - The form submission event.
-             */
-            const handleFormSubmit = (e) => {
-                e.preventDefault(); // Prevent actual form submission
-                if (validateForm()) {
-                    const successMsg = currentMode === 'signup' 
-                        ? 'Account created successfully!' 
-                        : 'Signed in successfully!';
-                    showSuccessMessage(successMsg);
-                    // In a real app, you would send data to a server here.
-                    console.log('Form is valid. Submitting data...');
-                    console.log({
-                        mode: currentMode,
-                        userid: useridInput.value,
-                        username: usernameInput.value,
-                        email: emailInput.value
-                    });
-                } else {
-                    console.log('Form validation failed.');
-                }
-            };
-
-            // --- Event Listeners ---
-            modeToggleButton.addEventListener('click', toggleMode);
-            form.addEventListener('submit', handleFormSubmit);
-
-            // --- Initial Setup ---
-            updateUIForMode(); // Set the initial state correctly
-        });
-    </script>
+    modeToggleButton.addEventListener('click', toggleMode);
+    updateUIForMode();
+});
+</script>
 </body>
 </html>

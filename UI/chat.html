@@ -1,0 +1,172 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>UniAgent - Chat</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --primary-color: #00A9FF; --secondary-color: #89CFF3; --background-color: #0F172A;
+            --surface-color: #1E293B; --text-color: #E2E8F0; --font-family: 'Inter', sans-serif;
+        }
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body {
+            font-family: var(--font-family); background: var(--background-color); color: var(--text-color);
+            display: flex; justify-content: center; align-items: center; min-height: 100vh;
+        }
+        .chat-container {
+            width: 100%; max-width: 800px; height: 90vh; max-height: 800px;
+            background-color: var(--surface-color); border-radius: 1.5rem;
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.2); border: 1px solid rgba(255, 255, 255, 0.1);
+            display: flex; flex-direction: column; overflow: hidden;
+        }
+        .chat-header {
+            padding: 1.5rem; background-color: rgba(0,0,0,0.2); display: flex;
+            justify-content: space-between; align-items: center; border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+        }
+        .chat-header h1 { font-size: 1.5rem; color: #fff; }
+        .chat-header #user-greeting { font-size: 1rem; color: var(--secondary-color); }
+        #logout-btn {
+            background: #334155; color: var(--text-color); border: none; padding: 0.5rem 1rem;
+            border-radius: 0.5rem; cursor: pointer; transition: background-color 0.3s;
+        }
+        #logout-btn:hover { background-color: #475569; }
+        .chat-messages { flex-grow: 1; padding: 1.5rem; overflow-y: auto; }
+        .message {
+            display: flex; margin-bottom: 1rem; max-width: 80%;
+        }
+        .message .text {
+            padding: 0.75rem 1rem; border-radius: 1rem; line-height: 1.5;
+        }
+        .message.user { margin-left: auto; flex-direction: row-reverse; }
+        .message.user .text { background-color: var(--primary-color); color: #fff; border-bottom-right-radius: 0; }
+        .message.bot .text { background-color: #334155; color: var(--text-color); border-bottom-left-radius: 0; }
+        .chat-input-form {
+            display: flex; padding: 1.5rem; border-top: 1px solid rgba(255, 255, 255, 0.1);
+            background-color: rgba(0,0,0,0.2);
+        }
+        #message-input {
+            flex-grow: 1; background-color: #334155; border: 1px solid #475569;
+            border-radius: 0.75rem; padding: 0.75rem 1rem; color: var(--text-color);
+            font-size: 1rem;
+        }
+        #message-input:focus { outline: none; border-color: var(--primary-color); }
+        #send-btn {
+            background-color: var(--primary-color); color: #fff; border: none;
+            padding: 0.75rem 1.5rem; border-radius: 0.75rem; margin-left: 1rem;
+            font-weight: 600; cursor: pointer; transition: background-color 0.3s;
+        }
+        #send-btn:hover { background-color: #0098e6; }
+    </style>
+</head>
+<body>
+
+    <div class="chat-container">
+        <div class="chat-header">
+            <div>
+                <h1>UniAgent</h1>
+                <span id="user-greeting"></span>
+            </div>
+            <button id="logout-btn">Logout</button>
+        </div>
+        <div class="chat-messages" id="chat-messages">
+            <!-- Messages will be appended here -->
+        </div>
+        <form class="chat-input-form" id="chat-form">
+            <input type="text" id="message-input" placeholder="Ask me anything..." autocomplete="off">
+            <button type="submit" id="send-btn">Send</button>
+        </form>
+    </div>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            
+            /**
+             * Redirects the user to the login page by constructing a full, absolute URL.
+             * This avoids issues with relative paths in sandboxed environments.
+             */
+            function redirectToLogin() {
+                // Construct the full URL to index.html based on the current location
+                const loginPageUrl = new URL('index.html', window.location.href);
+                window.location.href = loginPageUrl.href;
+            }
+
+            // --- Check for logged-in user ---
+            const userInfo = JSON.parse(localStorage.getItem('uniagent_user'));
+            if (!userInfo || !userInfo.userId) {
+                // If no user info, redirect to login page
+                redirectToLogin();
+                return; // Stop script execution
+            }
+
+            // --- DOM Element References ---
+            const userGreeting = document.getElementById('user-greeting');
+            const logoutBtn = document.getElementById('logout-btn');
+            const chatMessages = document.getElementById('chat-messages');
+            const chatForm = document.getElementById('chat-form');
+            const messageInput = document.getElementById('message-input');
+
+            // --- Initial Setup ---
+            userGreeting.textContent = `Welcome, ${userInfo.username || userInfo.userId}!`;
+            addMessageToUI("Hello! I'm UniAgent. How can I assist you today?", 'bot');
+
+            // --- Functions ---
+
+            /**
+             * Appends a message to the chat UI.
+             * @param {string} text - The message content.
+             * @param {string} sender - 'user' or 'bot'.
+             */
+            function addMessageToUI(text, sender) {
+                const messageElement = document.createElement('div');
+                messageElement.classList.add('message', sender);
+                
+                const textElement = document.createElement('div');
+                textElement.classList.add('text');
+                textElement.textContent = text;
+                
+                messageElement.appendChild(textElement);
+                chatMessages.appendChild(messageElement);
+                
+                // Scroll to the latest message
+                chatMessages.scrollTop = chatMessages.scrollHeight;
+            }
+            
+            /**
+             * Handles the form submission for sending a message.
+             * @param {Event} e - The form submission event.
+             */
+            function handleSendMessage(e) {
+                e.preventDefault();
+                const userMessage = messageInput.value.trim();
+                if (userMessage === '') return;
+
+                addMessageToUI(userMessage, 'user');
+                messageInput.value = '';
+
+                // Simulate bot response
+                setTimeout(() => {
+                    // Placeholder logic: Always respond with "I don't know"
+                    const botResponse = "I don't know the answer to that yet.";
+                    addMessageToUI(botResponse, 'bot');
+                }, 1000);
+            }
+
+            /**
+             * Handles the logout process.
+             */
+            function handleLogout() {
+                localStorage.removeItem('uniagent_user');
+                redirectToLogin();
+            }
+
+            // --- Event Listeners ---
+            chatForm.addEventListener('submit', handleSendMessage);
+            logoutBtn.addEventListener('click', handleLogout);
+        });
+    </script>
+</body>
+</html>
